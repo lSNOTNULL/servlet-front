@@ -1,134 +1,131 @@
 <!DOCTYPE html>
 <html lang="ko">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>프로그래머에겐 오직 슬픔뿐</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>배포라도 하는것 그것이 배포니까</title>
     <style>
-        @font-face {
-            font-family: 'BMkkubulimTTF-Regular';
-            src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2410-1@1.0/BMkkubulimTTF-Regular.woff2') format('woff2');
-            font-weight: normal;
-            font-style: normal;
-        }
+      @font-face {
+        font-family: "BMkkubulimTTF-Regular";
+        src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/2410-1@1.0/BMkkubulimTTF-Regular.woff2")
+          format("woff2");
+        font-weight: normal;
+        font-style: normal;
+      }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'BMkkubulimTTF-Regular';
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "BMkkubulimTTF-Regular";
+      }
 
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            padding: 20px;
-            background-color: #f9f9f9;
-        }
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        padding: 20px;
+        background-color: #f9f9f9;
+      }
 
-        #container {
-            max-width: 800px;
-            width: 100%;
-            text-align: center;
-        }
+      #container {
+        max-width: 800px;
+        width: 100%;
+        text-align: center;
+      }
 
-        #title {
-            font-size: 2rem;
-            padding: 16px;
-            margin-bottom: 12px;
-        }
+      #title {
+        font-size: 2rem;
+        padding: 16px;
+        margin-bottom: 12px;
+      }
 
-        #box img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 12px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
+      #box img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 12px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
 
-        textarea {
-            width: 100%;
-            resize: none;
-            padding: 16px;
-            margin: 16px 0;
-            border-radius: 8px;
-            border: 1px solid #ddd;
-            font-size: 1rem;
-        }
+      textarea {
+        width: 100%;
+        resize: none;
+        padding: 16px;
+        margin: 16px 0;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        font-size: 1rem;
+      }
 
-        button {
-            width: 120px;
-            height: 50px;
-            border: none;
-            border-radius: 8px;
-            background-color: #4a90e2;
-            color: white;
-            font-size: 1.1rem;
-            cursor: pointer;
-        }
+      button {
+        width: 120px;
+        height: 50px;
+        border: none;
+        border-radius: 8px;
+        background-color: #4a90e2;
+        color: white;
+        font-size: 1.1rem;
+        cursor: pointer;
+      }
 
-        button:disabled {
-            background-color: #ccc;
-            cursor: not-allowed;
-        }
+      button:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+      }
 
-        #model {
-            margin-top: 8px;
-            color: #777;
-            font-size: 0.9rem;
-        }
+      #model {
+        margin-top: 8px;
+        color: #777;
+        font-size: 0.9rem;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <div id="container">
-        <div id="title">프로그래머의 오직 슬픔과 만연한 슬픔</div>
-        <div id="box"></div>
-        <textarea id="val" rows="4">프로그래머가 슬퍼질 만한 귀여운 일러스트 (폭력적이거나 선정적인 장면 제외)</textarea>
-        <button id="btn">다시</button>
-        <div id="model"></div>
+      <div id="title">배포라도 하는것 그것이 배포니까까</div>
+      <div id="box"></div>
+      <textarea id="val" rows="4">트러블슈팅</textarea>
+      <button id="btn">다시</button>
+      <div id="model"></div>
     </div>
 
     <script>
-        const button = document.querySelector("#btn");
-        const val = document.querySelector("#val");
-        const model = document.querySelector("#model");
-        const box = document.querySelector("#box");
+      const button = document.querySelector("#btn");
+      const val = document.querySelector("#val");
+      const model = document.querySelector("#model");
+      const box = document.querySelector("#box");
 
-        async function buttonHandler() {
-            button.disabled = true;
-            val.disabled = true;
-            box.innerHTML = "<p>이미지를 생성 중입니다...</p>";
+      async function buttonHandler() {
+        button.disabled = true;
+        val.disabled = true;
+        box.innerHTML = "<p>이미지를 생성 중입니다...</p>";
 
-            const url = "https://servlet-pipeline.onrender.com/chat";
+        const url = "https://servlet-pipeline-qx1l.onrender.com/chat";
 
-            try {
-                const response = await fetch(url, {
-                    method: "POST",
-                    body: JSON.stringify({ content: val.value }),
-                });
+        try {
+          const response = await fetch(url, {
+            method: "POST",
+            body: JSON.stringify({ content: val.value }),
+          });
 
-                const json = await response.json();
-                box.innerHTML = `<img src="${json.data[0].url}" alt="생성된 이미지">`;
-                model.textContent = json.model;
-                alert("이미지가 성공적으로 생성되었습니다!");
-
-            } catch (error) {
-                console.error(error);
-                box.innerHTML = "<p>오류가 발생했습니다. 다시 시도해주세요.</p>";
-                alert("오류가 발생했습니다.");
-
-            } finally {
-                button.disabled = false;
-                val.disabled = false;
-            }
+          const json = await response.json();
+          box.innerHTML = `<img src="${json.data[0].url}" alt="생성된 이미지">`;
+          model.textContent = json.model;
+          alert("이미지가 성공적으로 생성되었습니다!");
+        } catch (error) {
+          console.error(error);
+          box.innerHTML = "<p>오류가 발생했습니다. 다시 시도해주세요.</p>";
+          alert("오류가 발생했습니다.");
+        } finally {
+          button.disabled = false;
+          val.disabled = false;
         }
+      }
 
-        button.addEventListener("click", buttonHandler);
-        window.addEventListener("DOMContentLoaded", buttonHandler);
+      button.addEventListener("click", buttonHandler);
+      window.addEventListener("DOMContentLoaded", buttonHandler);
     </script>
-</body>
-
+  </body>
 </html>
