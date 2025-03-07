@@ -1,25 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>프로그래머에겐 오직 슬픔뿐</title>
+    <style>
+        @font-face {
+    font-family: 'BMkkubulimTTF-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2410-1@1.0/BMkkubulimTTF-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'BMkkubulimTTF-Regular';
+}
+    </style>
 </head>
+
 <body>
-    <div id="box"></div>
+    <div style="display: flex; align-items: center; flex-direction: column; max-width: 100vw;">
+        <div id="box">
+            <div style="padding: 24px; font-size: 2rem;">
+                프로그래머의 오직 슬픔과 만연한 슬픔
+            </div>
+        </div>
+        <div id="model"></div>
+        <textarea rows="4" cols="48" style="resize: none; padding: 16px; margin: 16px;" id="val"></textarea>    
+        <button style="width: 120px; height: 60px;" id="btn" disabled>다시</button>    
+    </div>
     <script>
-        // 본인 render로 바꾸기!!!
-        fetch("https://servlet-pipeline.onrender.com/chat", {
-        // fetch("http://localhost:8080/servlet-pipeline/chat", {
-            method: "POST",
-            body: JSON.stringify({
-                content: "An image of a frustrated person coding, but not violent or troubled. Korean webtoon style.",
-            })
-        }).then((el) => el.json()).then(el => {
-            console.log(el);
-            return el.data[0].url})
-        .then(el => document.querySelector("#box")
-        .innerHTML =`<img src="${el}" width="1024" height="768">`)
+        const button = document.querySelector("#btn");
+        const val = document.querySelector("#val");
+        const model = document.querySelector("#model");
+        val.textContent = "A fairly cute illustration of a moment that would make a programmer feel sad (but shouldn't be violent or obscene)";
+        async function buttonHandler() {
+            button.setAttribute("disabled", true);
+            val.setAttribute("disabled", true);
+            // 본인 걸로 제발 바꿔주기... 안 그러면 cors할수밖에 없어...
+            const url = "https://servlet-pipeline.onrender.com/chat";
+            try {
+                const response = await fetch(url, {
+                    // fetch("http://localhost:8080/servlet-pipeline/chat", {
+                    method: "POST",
+                    body: JSON.stringify({
+                        content: document.querySelector("#val").textContent,
+                    })
+                });
+                const json = await response.json();
+                console.log(json);
+                document.querySelector("#box")
+                    .innerHTML = `<img src="${json.data[0].url}" width="1024" height="768">`
+                model.textContent = json.model;
+                alert("완료되었다!!!");
+            } catch {
+                alert("뭔가 잘못됨!!!");
+            } finally {
+                button.removeAttribute("disabled");
+                val.removeAttribute("disabled");
+            }
+        }
+        button.addEventListener("click", buttonHandler)
+        buttonHandler();
     </script>
 </body>
+
 </html>
